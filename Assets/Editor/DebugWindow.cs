@@ -12,7 +12,6 @@ namespace MokomoGames
         {
             public class DebugWindow : EditorWindow
             {
-                static bool displayDebugModel;
 
                 [MenuItem ("MokomoGames/DebugWindow")]
                 public static void Open ()
@@ -24,11 +23,19 @@ namespace MokomoGames
                 {
                     using (new EditorGUILayout.VerticalScope (GUI.skin.box))
                     {
-                        EditorGUILayout.LabelField ("プレイヤー詳細情報表示(追従)");
-                        Debugger.Config.DisplayPlayerData = EditorGUILayout.Toggle (Debugger.Config.DisplayPlayerData);
+                        foreach (var debugFlag in Debugger.config.DebugFlags)
+                        {
+                            DisplayDebugFlagToggle (debugFlag.Value);
+                        }
+                    }
+                }
 
-                        EditorGUILayout.LabelField ("プレイヤー詳細情報表示(固定)");
-                        Debugger.Config.DisplayFixPlayerData = EditorGUILayout.Toggle (Debugger.Config.DisplayFixPlayerData);
+                void DisplayDebugFlagToggle (DebugFlag debugFlag)
+                {
+                    using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
+                    {
+                        EditorGUILayout.LabelField (debugFlag.Description);
+                        debugFlag.Active = EditorGUILayout.Toggle (debugFlag.Active);
                     }
                 }
             }
