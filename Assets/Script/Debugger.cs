@@ -21,9 +21,28 @@ namespace MokomoGames
                 }
             }
 
-            public static class Config
+            public static Config config = new Config ();
+
+            public class Config
             {
-                public static bool DisplayPlayerData;
+                public bool GetFlagActive (DebugFlagType flagType)
+                {
+                    if (DebugFlags.TryGetValue (flagType, out DebugFlag flag))
+                    {
+                        return flag.Active;
+                    }
+                    return false;
+                }
+
+                Dictionary<DebugFlagType, DebugFlag> debugFlags;
+                public IReadOnlyDictionary<DebugFlagType, DebugFlag> DebugFlags => debugFlags;
+
+                public Config ()
+                {
+                    debugFlags = new Dictionary<DebugFlagType, DebugFlag> ();
+                    debugFlags.Add (DebugFlagType.DisplayTransformPlayerData, new DebugFlag ("プレイヤー詳細情報表示(追従)"));
+                    debugFlags.Add (DebugFlagType.DisplayFixPlayerData, new DebugFlag ("プレイヤー詳細情報表示(固定)"));
+                }
             }
 
             static Vector2 CalcScreenPosWithSpan (Vector2 screenPos, int drawOrder)

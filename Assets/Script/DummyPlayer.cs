@@ -42,13 +42,32 @@ public class DummyPlayer : MonoBehaviour
         }
     }
 
+    FixDebugDrawer fixDebugDrawer;
+    FixDebugDrawer FixDebugDrawer
+    {
+        get
+        {
+            if (fixDebugDrawer == null)
+                fixDebugDrawer = new FixDebugDrawer (new Vector2 (0f, Screen.height - 60f));
+            return fixDebugDrawer;
+        }
+    }
+
     public void OnGUI ()
     {
-        if (Debugger.Config.DisplayPlayerData)
+        if (Debugger.config.GetFlagActive (DebugFlagType.DisplayTransformPlayerData))
         {
             Debugger.DisplayDebugModel (
                 PlayerInfoDebugModel,
                 TransformDebugDrawer);
+        }
+
+        if (Debugger.config.GetFlagActive (DebugFlagType.DisplayFixPlayerData))
+        {
+            Debugger.DisplayDebugModel (
+                PlayerInfoDebugModel,
+                FixDebugDrawer
+            );
         }
     }
 
