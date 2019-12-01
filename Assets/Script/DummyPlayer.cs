@@ -48,21 +48,21 @@ public class DummyPlayer : MonoBehaviour
         get
         {
             if (fixDebugDrawer == null)
-                fixDebugDrawer = new FixDebugDrawer (new Vector2 (0f, Screen.height - 70f));
+                fixDebugDrawer = new FixDebugDrawer (new Vector2 (0f, Screen.height - 60f));
             return fixDebugDrawer;
         }
     }
 
     public void OnGUI ()
     {
-        if (Debugger.Config.DisplayPlayerData)
+        if (Debugger.config.GetFlagActive (DebugFlagType.DisplayTransformPlayerData))
         {
             Debugger.DisplayDebugModel (
                 PlayerInfoDebugModel,
                 TransformDebugDrawer);
         }
 
-        if (Debugger.Config.DisplayFixPlayerData)
+        if (Debugger.config.GetFlagActive (DebugFlagType.DisplayFixPlayerData))
         {
             Debugger.DisplayDebugModel (
                 PlayerInfoDebugModel,
