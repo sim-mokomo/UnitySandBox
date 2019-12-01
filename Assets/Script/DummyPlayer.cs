@@ -42,6 +42,17 @@ public class DummyPlayer : MonoBehaviour
         }
     }
 
+    FixDebugDrawer fixDebugDrawer;
+    FixDebugDrawer FixDebugDrawer
+    {
+        get
+        {
+            if (fixDebugDrawer == null)
+                fixDebugDrawer = new FixDebugDrawer (new Vector2 (0f, Screen.height - 70f));
+            return fixDebugDrawer;
+        }
+    }
+
     public void OnGUI ()
     {
         if (Debugger.Config.DisplayPlayerData)
@@ -49,6 +60,14 @@ public class DummyPlayer : MonoBehaviour
             Debugger.DisplayDebugModel (
                 PlayerInfoDebugModel,
                 TransformDebugDrawer);
+        }
+
+        if (Debugger.Config.DisplayFixPlayerData)
+        {
+            Debugger.DisplayDebugModel (
+                PlayerInfoDebugModel,
+                FixDebugDrawer
+            );
         }
     }
 
