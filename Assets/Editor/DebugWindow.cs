@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DebugWindow : EditorWindow
+namespace MokomoGames
 {
-    [MenuItem ("MokomoGames/DebugWindow")]
-    public static void Open ()
+    namespace Debug
     {
-        EditorWindow.CreateWindow<DebugWindow> ();
+        public class DebugWindow : EditorWindow
+        {
+            [MenuItem ("MokomoGames/DebugWindow")]
+            public static void Open ()
+            {
+                EditorWindow.CreateWindow<DebugWindow> ();
+            }
+        }
     }
 }
