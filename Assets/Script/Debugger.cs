@@ -24,6 +24,7 @@ namespace MokomoGames
             public static class Config
             {
                 public static bool DisplayPlayerData;
+                public static bool DisplayFixPlayerData;
             }
 
             static Vector2 CalcScreenPosWithSpan (Vector2 screenPos, int drawOrder)

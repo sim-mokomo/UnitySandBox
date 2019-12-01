@@ -22,10 +22,13 @@ namespace MokomoGames
 
                 public void OnGUI ()
                 {
-                    using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
+                    using (new EditorGUILayout.VerticalScope (GUI.skin.box))
                     {
-                        EditorGUILayout.LabelField ("プレイヤー詳細情報表示");
+                        EditorGUILayout.LabelField ("プレイヤー詳細情報表示(追従)");
                         Debugger.Config.DisplayPlayerData = EditorGUILayout.Toggle (Debugger.Config.DisplayPlayerData);
+
+                        EditorGUILayout.LabelField ("プレイヤー詳細情報表示(固定)");
+                        Debugger.Config.DisplayFixPlayerData = EditorGUILayout.Toggle (Debugger.Config.DisplayFixPlayerData);
                     }
                 }
             }
