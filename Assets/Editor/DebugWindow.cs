@@ -14,6 +14,7 @@ namespace MokomoGames
             public class DebugWindow : EditorWindow
             {
                 Filter filter = new Filter ();
+                DebugInspector inspector = new DebugInspector ();
 
                 [MenuItem ("MokomoGames/DebugWindow")]
                 public static void Open ()
@@ -23,21 +24,28 @@ namespace MokomoGames
 
                 public void OnGUI ()
                 {
-                    using (new EditorGUILayout.VerticalScope (GUI.skin.box))
+                    using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
                     {
-                        using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
+                        using (new EditorGUILayout.VerticalScope (GUI.skin.window))
                         {
-                            EditorGUILayout.LabelField ("フィルター");
-                            filter.Name = EditorGUILayout.TextField (filter.Name);
+                            using (new EditorGUILayout.VerticalScope (GUI.skin.box))
+                            {
+                                using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
+                                {
+                                    EditorGUILayout.LabelField ("フィルター");
+                                    filter.Name = EditorGUILayout.TextField (filter.Name);
+                                }
+                            }
+                            using (new EditorGUILayout.VerticalScope (GUI.skin.box))
+                            {
+                                foreach (var debugFlag in Debugger.config.DebugFlags.Values)
+                                {
+                                    if (filter.IsFilter (debugFlag.Description))
+                                        DisplayDebugFlagToggle (debugFlag);
+                                }
+                            }
                         }
-                    }
-                    using (new EditorGUILayout.VerticalScope (GUI.skin.box))
-                    {
-                        foreach (var debugFlag in Debugger.config.DebugFlags.Values)
-                        {
-                            if (filter.IsFilter (debugFlag.Description))
-                                DisplayDebugFlagToggle (debugFlag);
-                        }
+                        inspector.OnGUI ();
                     }
                 }
 
