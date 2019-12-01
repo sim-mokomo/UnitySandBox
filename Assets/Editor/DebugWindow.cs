@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using MokomoGames.Debug;
 using UnityEditor;
@@ -12,6 +13,7 @@ namespace MokomoGames
         {
             public class DebugWindow : EditorWindow
             {
+                Filter filter = new Filter ();
 
                 [MenuItem ("MokomoGames/DebugWindow")]
                 public static void Open ()
@@ -23,9 +25,18 @@ namespace MokomoGames
                 {
                     using (new EditorGUILayout.VerticalScope (GUI.skin.box))
                     {
-                        foreach (var debugFlag in Debugger.config.DebugFlags)
+                        using (new EditorGUILayout.HorizontalScope (GUI.skin.box))
                         {
-                            DisplayDebugFlagToggle (debugFlag.Value);
+                            EditorGUILayout.LabelField ("フィルター");
+                            filter.Name = EditorGUILayout.TextField (filter.Name);
+                        }
+                    }
+                    using (new EditorGUILayout.VerticalScope (GUI.skin.box))
+                    {
+                        foreach (var debugFlag in Debugger.config.DebugFlags.Values)
+                        {
+                            if (filter.IsFilter (debugFlag.Description))
+                                DisplayDebugFlagToggle (debugFlag);
                         }
                     }
                 }
@@ -37,6 +48,36 @@ namespace MokomoGames
                         EditorGUILayout.LabelField (debugFlag.Description);
                         debugFlag.Active = EditorGUILayout.Toggle (debugFlag.Active);
                     }
+                }
+
+                public class Filter
+                {
+                    string preFilter = "";
+                    string name = "";
+                    public string Name
+                    {
+                        get
+                        {
+                            return name;
+                        }
+                        set
+                        {
+                            preFilter = name;
+                            name = value;
+                            if (!preFilter.Equals (name))
+                            {
+                                OnUpdateName?.Invoke (name);
+                            }
+                        }
+                    }
+
+                    public bool IsFilter (string otherName)
+                    {
+                        return otherName.Contains (name) || string.IsNullOrEmpty (name);
+                    }
+
+                    public event Action<string> OnUpdateName;
+
                 }
             }
         }
