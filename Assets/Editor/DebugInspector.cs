@@ -9,7 +9,10 @@ public class DebugInspector
     {
         using (new EditorGUILayout.VerticalScope (GUI.skin.window))
         {
-            EditorGUILayout.LabelField ("Hello Inspector World");
+            using (new EditorGUILayout.VerticalScope (GUI.skin.box))
+            {
+                EditorGUILayout.LabelField ("Hello Inspector World");
+            }
         }
     }
 }
