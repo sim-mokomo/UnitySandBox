@@ -16,10 +16,10 @@ namespace MokomoGames
             this.DefaultValue = defaultValue;
         }
 
-        public string Format(bool enableTab=false)
+        public string Format(int tabNum)
         {
             var builder = new StringBuilder();
-            builder.AppendLineWithTab(enableTab: enableTab,$"\tpublic static readonly string {Name} = \"{DefaultValue}\";");
+            builder.AppendLineWithTab(tabNum,$"public static readonly string {Name} = \"{DefaultValue}\";");
             return builder.ToString();
         }
     }

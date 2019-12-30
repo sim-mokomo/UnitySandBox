@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -7,10 +8,12 @@ namespace MokomoGames
 {
     public static class StringBuilderExtention
     {
-        public static void AppendLineWithTab(this StringBuilder self, bool enableTab, string message)
+        public static void AppendLineWithTab(this StringBuilder self, int tabNum, string message)
         {
-            if(enableTab)
+            for (int i = 0; i < tabNum; i++)
+            {
                 self.Append("\t");
+            }
             self.AppendLine(message);
         }
     }

@@ -87,7 +87,7 @@ namespace MokomoGames.Editor.Debug
                 }
                  
                 var path = GetOutputFilePath(_outputDistDirectory, _targetAnimatorController);
-                File.WriteAllText(path,classBuilder.Format());
+                File.WriteAllText(path,classBuilder.Format(tabNum: 0));
                 AssetDatabase.Refresh();
             }
         }

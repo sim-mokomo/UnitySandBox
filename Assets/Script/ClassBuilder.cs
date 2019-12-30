@@ -29,23 +29,23 @@ namespace MokomoGames
             }
         }
 
-        public string Format(bool enableTab=false)
+        public string Format(int tabNum)
         {
             var builder = new StringBuilder();
-            builder.AppendLineWithTab(enableTab,$"public static class {_className}");
-            builder.AppendLineWithTab(enableTab,"{");
+            builder.AppendLineWithTab(tabNum,$"public static class {_className}");
+            builder.AppendLineWithTab(tabNum,"{");
             
             foreach (var classBuilder in _classBuilders)
             {
-                builder.AppendLine(classBuilder.Format(enableTab: true));
+                builder.AppendLine(classBuilder.Format(tabNum + 1));
             }
             
             foreach (var variable in _variables)
             {
-                builder.AppendLine(variable.Format(enableTab: true));
+                builder.AppendLine(variable.Format(tabNum + 1));
             }
             
-            builder.AppendLineWithTab(enableTab,"}");
+            builder.AppendLineWithTab(tabNum,"}");
             return builder.ToString();
         }
     }
