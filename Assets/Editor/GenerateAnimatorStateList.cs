@@ -12,7 +12,6 @@ namespace MokomoGames.Editor.Debug
 {
     public class GenerateAnimatorStateList : EditorWindow
     {
-        private AnimatorController _targetAnimatorController;
         private UnityEngine.Object _outputDistDirectory;
 
         [MenuItem("MokomoGames/Animatorのステート名定数クラスを生成")]
@@ -20,24 +19,18 @@ namespace MokomoGames.Editor.Debug
         {
             GetWindow<GenerateAnimatorStateList>();
         }
-
-        public bool AllowOutput => _targetAnimatorController != null && _targetAnimatorController != null;
-
+        
         private string GetOutputFilePath(UnityEngine.Object outputDirectory,AnimatorController animatorController)
         {
             var basePath = AssetDatabase.GetAssetPath(_outputDistDirectory);
-            var fileName = Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController));
+            var fileName = animatorController != null
+                ? Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController))
+                : "*";
             return $"{basePath}/{fileName}.cs";
         }
 
         private void OnGUI()
         {
-            _targetAnimatorController = EditorGUILayout.ObjectField(
-                "ステート名を定数クラスに抽出するAnimator",
-                _targetAnimatorController,
-                typeof(AnimatorController),
-                allowSceneObjects: false) as AnimatorController;
-
             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
             {
                 _outputDistDirectory = EditorGUILayout.ObjectField(
@@ -46,49 +39,41 @@ namespace MokomoGames.Editor.Debug
                     typeof(UnityEngine.Object),
                     allowSceneObjects:false);
 
-                var outputDescription =
-                    AllowOutput ? 
-                        GetOutputFilePath(_outputDistDirectory, _targetAnimatorController) :
-                        "設定が不十分です";
+                var outputDescription = _outputDistDirectory != null
+                    ? GetOutputFilePath(_outputDistDirectory, null)
+                    : "設定が不十分です";
                 EditorGUILayout.LabelField($"書き出し先→{outputDescription}");
             }
             
-            EditorGUILayout.LabelField("↓抽出されるステート、レイヤーごとに分割される。");
-            using(new EditorGUILayout.VerticalScope(GUI.skin.box))
-            {
-                if(_targetAnimatorController == null)
-                    return;
-                foreach (var layer in _targetAnimatorController.layers)
-                {
-                    EditorGUILayout.LabelField($"レイヤー名:{layer.name}",EditorStyles.boldLabel);
-                    foreach (var state in layer.stateMachine.states)
-                    {
-                        EditorGUILayout.LabelField(state.state.name);
-                    }
-                }
-            }
-
             if (GUILayout.Button("抽出開始"))
             {
-                if(_targetAnimatorController == null)
+                if(_outputDistDirectory == null)
                     return;
 
-                var classBuilder = new ClassBuilder( _targetAnimatorController.name );
-                foreach (var layer in _targetAnimatorController.layers)
+                var animatorControllers = AssetDatabase
+                    .GetAllAssetPaths()
+                    .Where(x => Path.GetExtension(x).Equals(".controller"))
+                    .Select(x => AssetDatabase.LoadAssetAtPath<AnimatorController>(x));
+
+                foreach (var animatorController in animatorControllers)
                 {
-                    var layerClassBuilder = new ClassBuilder(layer.name);
-                    layerClassBuilder.AddVariables( layer
-                        .stateMachine
-                        .states
-                        .Select(x => new VariableBuilder(x.state.name,x.state.name))
-                        .ToList()
-                    );
-                    classBuilder.AddClasses(layerClassBuilder);
+                    var classBuilder = new ClassBuilder( animatorController.name );
+                    foreach (var layer in animatorController.layers)
+                    {
+                        var layerClassBuilder = new ClassBuilder(layer.name);
+                        layerClassBuilder.AddVariables( layer
+                            .stateMachine
+                            .states
+                            .Select(x => new VariableBuilder(x.state.name,x.state.name))
+                            .ToList()
+                        );
+                        classBuilder.AddClasses(layerClassBuilder);
+                    }
+                     
+                    var path = GetOutputFilePath(_outputDistDirectory, animatorController);
+                    File.WriteAllText(path,classBuilder.Format(tabNum: 0));
+                    AssetDatabase.Refresh();
                 }
-                 
-                var path = GetOutputFilePath(_outputDistDirectory, _targetAnimatorController);
-                File.WriteAllText(path,classBuilder.Format(tabNum: 0));
-                AssetDatabase.Refresh();
             }
         }
     }
