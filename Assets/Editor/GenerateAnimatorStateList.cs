@@ -31,12 +31,12 @@ namespace MokomoGames.Editor.Debug
                     allowSceneObjects:false);
 
                 var outputDescription = _outputDistDirectory != null
-                    ? GetOutputFilePath(_outputDistDirectory, null)
+                    ? GetOutputFilePath(_outputDistDirectory, "*")
                     : "設定が不十分です";
                 EditorGUILayout.LabelField($"書き出し先→{outputDescription}");
             }
             
-            if (GUILayout.Button("抽出開始"))
+            if (GUILayout.Button("全てのAnimatorControllerを定数クラスとして書き出し"))
             {
                 if(_outputDistDirectory == null)
                     return;
@@ -46,20 +46,27 @@ namespace MokomoGames.Editor.Debug
                 foreach (var animatorController in animatorControllers)
                 {
                     var classBuilder = MakeAnimatorControllerClassBuilder(animatorController);
-                    var path = GetOutputFilePath(_outputDistDirectory, animatorController);
+                    var path = GetOutputFilePath(_outputDistDirectory, classBuilder.ClassName);
                     File.WriteAllText(path,classBuilder.Format(tabNum: 0));
                     AssetDatabase.Refresh();
                 }
             }
+
+            if (GUILayout.Button("全てのシーンを定数クラスとして書き出し"))
+            {
+                var sceneAnimatorController = MakeSceneClassBuilder();
+                File.WriteAllText(
+                    GetOutputFilePath(_outputDistDirectory,sceneAnimatorController.ClassName),
+                    sceneAnimatorController.Format(0)
+                    );
+                AssetDatabase.Refresh();
+            }
         }
         
-        private string GetOutputFilePath(UnityEngine.Object outputDirectory,AnimatorController animatorController)
+        private string GetOutputFilePath(UnityEngine.Object outputDirectory,string className)
         {
             var basePath = AssetDatabase.GetAssetPath(outputDirectory);
-            var fileName = animatorController != null
-                ? Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController))
-                : "*";
-            return $"{basePath}/{fileName}.cs";
+            return $"{basePath}/{className}.cs";
         }
 
         private IEnumerable<AnimatorController> GetAllAnimatorControllers()
@@ -85,6 +92,22 @@ namespace MokomoGames.Editor.Debug
                 classBuilder.AddClass(layerClassBuilder);
             }
 
+            return classBuilder;
+        }
+
+        private ClassBuilder MakeSceneClassBuilder()
+        {
+            var classBuilder = new ClassBuilder(className: "SceneNames");
+            classBuilder.AddVariables(
+                AssetDatabase
+                    .GetAllAssetPaths()
+                    .Where(x => Path.GetExtension(x).Equals(".unity"))
+                    .Select(x => 
+                        new VariableBuilder(
+                            Path.GetFileNameWithoutExtension(x),
+                            Path.GetFileNameWithoutExtension(x)))
+                    .ToList()
+                ); 
             return classBuilder;
         }
     }
