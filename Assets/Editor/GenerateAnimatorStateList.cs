@@ -36,7 +36,7 @@ namespace MokomoGames.Editor.Debug
                 EditorGUILayout.LabelField($"書き出し先→{outputDescription}");
             }
             
-            if (GUILayout.Button("抽出開始"))
+            if (GUILayout.Button("全てのAnimatorControllerを定数クラスとして書き出し"))
             {
                 if(_outputDistDirectory == null)
                     return;
@@ -46,7 +46,7 @@ namespace MokomoGames.Editor.Debug
                 foreach (var animatorController in animatorControllers)
                 {
                     var classBuilder = MakeAnimatorControllerClassBuilder(animatorController);
-                    var path = GetOutputFilePath(_outputDistDirectory, animatorController);
+                    var path = GetOutputFilePath(_outputDistDirectory, classBuilder.ClassName);
                     File.WriteAllText(path,classBuilder.Format(tabNum: 0));
                     AssetDatabase.Refresh();
                 }
