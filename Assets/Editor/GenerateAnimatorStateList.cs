@@ -20,15 +20,6 @@ namespace MokomoGames.Editor.Debug
             GetWindow<GenerateAnimatorStateList>();
         }
         
-        private string GetOutputFilePath(UnityEngine.Object outputDirectory,AnimatorController animatorController)
-        {
-            var basePath = AssetDatabase.GetAssetPath(_outputDistDirectory);
-            var fileName = animatorController != null
-                ? Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController))
-                : "*";
-            return $"{basePath}/{fileName}.cs";
-        }
-
         private void OnGUI()
         {
             using (new EditorGUILayout.VerticalScope(GUI.skin.box))
@@ -50,31 +41,51 @@ namespace MokomoGames.Editor.Debug
                 if(_outputDistDirectory == null)
                     return;
 
-                var animatorControllers = AssetDatabase
-                    .GetAllAssetPaths()
-                    .Where(x => Path.GetExtension(x).Equals(".controller"))
-                    .Select(x => AssetDatabase.LoadAssetAtPath<AnimatorController>(x));
+                var animatorControllers = GetAllAnimatorControllers();
 
                 foreach (var animatorController in animatorControllers)
                 {
-                    var classBuilder = new ClassBuilder( animatorController.name );
-                    foreach (var layer in animatorController.layers)
-                    {
-                        var layerClassBuilder = new ClassBuilder(layer.name);
-                        layerClassBuilder.AddVariables( layer
-                            .stateMachine
-                            .states
-                            .Select(x => new VariableBuilder(x.state.name,x.state.name))
-                            .ToList()
-                        );
-                        classBuilder.AddClasses(layerClassBuilder);
-                    }
-                     
+                    var classBuilder = MakeAnimatorControllerClassBuilder(animatorController);
                     var path = GetOutputFilePath(_outputDistDirectory, animatorController);
                     File.WriteAllText(path,classBuilder.Format(tabNum: 0));
                     AssetDatabase.Refresh();
                 }
             }
+        }
+        
+        private string GetOutputFilePath(UnityEngine.Object outputDirectory,AnimatorController animatorController)
+        {
+            var basePath = AssetDatabase.GetAssetPath(outputDirectory);
+            var fileName = animatorController != null
+                ? Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController))
+                : "*";
+            return $"{basePath}/{fileName}.cs";
+        }
+
+        private IEnumerable<AnimatorController> GetAllAnimatorControllers()
+        {
+            return AssetDatabase
+                .GetAllAssetPaths()
+                .Where(x => Path.GetExtension(x).Equals(".controller"))
+                .Select(x => AssetDatabase.LoadAssetAtPath<AnimatorController>(x));
+        }
+
+        private ClassBuilder MakeAnimatorControllerClassBuilder(AnimatorController animatorController)
+        {
+            var classBuilder = new ClassBuilder( animatorController.name );
+            foreach (var layer in animatorController.layers)
+            {
+                var layerClassBuilder = new ClassBuilder(layer.name);
+                layerClassBuilder.AddVariables( layer
+                    .stateMachine
+                    .states
+                    .Select(x => new VariableBuilder(x.state.name,x.state.name))
+                    .ToList()
+                );
+                classBuilder.AddClasses(layerClassBuilder);
+            }
+
+            return classBuilder;
         }
     }
 }
