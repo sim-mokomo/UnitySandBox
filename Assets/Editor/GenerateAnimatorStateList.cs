@@ -51,6 +51,16 @@ namespace MokomoGames.Editor.Debug
                     AssetDatabase.Refresh();
                 }
             }
+
+            if (GUILayout.Button("全てのシーンを定数クラスとして書き出し"))
+            {
+                var sceneAnimatorController = MakeSceneClassBuilder();
+                File.WriteAllText(
+                    GetOutputFilePath(_outputDistDirectory,sceneAnimatorController.ClassName),
+                    sceneAnimatorController.Format(0)
+                    );
+                AssetDatabase.Refresh();
+            }
         }
         
         private string GetOutputFilePath(UnityEngine.Object outputDirectory,string className)
@@ -82,6 +92,22 @@ namespace MokomoGames.Editor.Debug
                 classBuilder.AddClass(layerClassBuilder);
             }
 
+            return classBuilder;
+        }
+
+        private ClassBuilder MakeSceneClassBuilder()
+        {
+            var classBuilder = new ClassBuilder(className: "SceneNames");
+            classBuilder.AddVariables(
+                AssetDatabase
+                    .GetAllAssetPaths()
+                    .Where(x => Path.GetExtension(x).Equals(".unity"))
+                    .Select(x => 
+                        new VariableBuilder(
+                            Path.GetFileNameWithoutExtension(x),
+                            Path.GetFileNameWithoutExtension(x)))
+                    .ToList()
+                ); 
             return classBuilder;
         }
     }

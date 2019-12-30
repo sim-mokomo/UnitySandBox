@@ -7,13 +7,13 @@ namespace MokomoGames
 {
     public class ClassBuilder
     {
-        private string _className;
+        public string ClassName;
         private List<VariableBuilder> _variables = new List<VariableBuilder>();
         private List<ClassBuilder> _classBuilders = new List<ClassBuilder>();
 
         public ClassBuilder(string className)
         {
-            _className = className;
+            ClassName = className;
         }
         
         public void AddClass(ClassBuilder classBuilder)
@@ -32,7 +32,7 @@ namespace MokomoGames
         public string Format(int tabNum)
         {
             var builder = new StringBuilder();
-            builder.AppendLineWithTab(tabNum,$"public static class {_className}");
+            builder.AppendLineWithTab(tabNum,$"public static class {ClassName}");
             builder.AppendLineWithTab(tabNum,"{");
             
             foreach (var classBuilder in _classBuilders)
