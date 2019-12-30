@@ -82,7 +82,7 @@ namespace MokomoGames.Editor.Debug
                     .Select(x => new VariableBuilder(x.state.name,x.state.name))
                     .ToList()
                 );
-                classBuilder.AddClasses(layerClassBuilder);
+                classBuilder.AddClass(layerClassBuilder);
             }
 
             return classBuilder;

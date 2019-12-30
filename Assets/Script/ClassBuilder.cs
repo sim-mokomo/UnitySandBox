@@ -16,7 +16,7 @@ namespace MokomoGames
             _className = className;
         }
         
-        public void AddClasses(ClassBuilder classBuilder)
+        public void AddClass(ClassBuilder classBuilder)
         {
             _classBuilders.Add(classBuilder);
         }
