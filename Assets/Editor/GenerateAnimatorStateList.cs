@@ -31,7 +31,7 @@ namespace MokomoGames.Editor.Debug
                     allowSceneObjects:false);
 
                 var outputDescription = _outputDistDirectory != null
-                    ? GetOutputFilePath(_outputDistDirectory, null)
+                    ? GetOutputFilePath(_outputDistDirectory, "*")
                     : "設定が不十分です";
                 EditorGUILayout.LabelField($"書き出し先→{outputDescription}");
             }
@@ -53,13 +53,10 @@ namespace MokomoGames.Editor.Debug
             }
         }
         
-        private string GetOutputFilePath(UnityEngine.Object outputDirectory,AnimatorController animatorController)
+        private string GetOutputFilePath(UnityEngine.Object outputDirectory,string className)
         {
             var basePath = AssetDatabase.GetAssetPath(outputDirectory);
-            var fileName = animatorController != null
-                ? Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(animatorController))
-                : "*";
-            return $"{basePath}/{fileName}.cs";
+            return $"{basePath}/{className}.cs";
         }
 
         private IEnumerable<AnimatorController> GetAllAnimatorControllers()
