@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 692185738}
   - component: {fileID: 692185737}
   m_Layer: 0
-  m_Name: Plane (1)
+  m_Name: FiredPaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -413,7 +413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692185736}
   m_LocalRotation: {x: 0.7140473, y: -0, z: -0, w: 0.70009744}
-  m_LocalPosition: {x: 0.8017, y: 1.105, z: -0}
+  m_LocalPosition: {x: 0.8017, y: 1.046, z: 0.175}
   m_LocalScale: {x: 0.1951529, y: 0.13022938, z: 0.21667393}
   m_Children: []
   m_Father: {fileID: 0}
