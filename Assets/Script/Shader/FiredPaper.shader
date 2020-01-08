@@ -9,6 +9,7 @@
         _TextureHeight ("TextureHeight",float) = 1
         _EdgeThrethhold ("EdgeThrethhold",float) = 0
         _EdgeColor ("EdgeColor",Color) = (0,0,0,0)
+        _BaseColor ("BaseColor",Color) = (0,0,0,0)
         _EdgeThickness ("EdgeThickness",float) = 1
     }
     SubShader
@@ -53,6 +54,7 @@
             float _EdgeThickness;
             float _Alpha;
             float _Intensity;
+            float4 _BaseColor;
 
             v2f vert (appdata v)
             {
@@ -98,7 +100,7 @@
                 float4 grayGrabTextureColor = gray(grabTextureColor);
                 grayGrabTextureColor.a = 1.0f;
                 float f = step(getTexColor(_NoiseTexture,i.uv),_Alpha);
-                return (f > 0 ? grayGrabTextureColor : grabTextureColor) + lerp(edgeColor,edgeColor,edge);
+                return (f > 0 ? grayGrabTextureColor * _BaseColor : grabTextureColor) + lerp(edgeColor,edgeColor,edge);
             }
             ENDCG
         }

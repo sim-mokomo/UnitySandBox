@@ -24,13 +24,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Alpha: 0
+    - _Alpha: 0.587
     - _EdgeThickness: 1
     - _EdgeThrethhold: 0.1
-    - _Intensity: 2
+    - _Intensity: 1
     - _TextureHeight: 2048
     - _TextureWidth: 2048
     m_Colors:
-    - _BaseColor: {r: 0.735849, g: 0.010412939, b: 0.010412939, a: 1}
+    - _BaseColor: {r: 0.6037736, g: 0, b: 0, a: 1}
     - _EdgeColor: {r: 1, g: 0.020871071, b: 0, a: 1}
   m_BuildTextureStacks: []
