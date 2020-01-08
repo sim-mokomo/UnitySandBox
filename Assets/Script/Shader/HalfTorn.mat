@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HalfTorn
+  m_Shader: {fileID: 4800000, guid: 5e89e70a7933f4b709191bdb82d6f80d, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BlockIntensity: 0.94
+    - _DivideNum: 12.41
+    - _Intensity: -0.74
+    - _MaxCircleScale: 0.21
+    - _MaxDiamondScale: -0.2
+    - _MetamolRatio: 0
+    - _MinCircleScale: 2.09
+    - _MinDiamondScale: 0.2
+    - _Param: 0.07
+    - _Scale: 1
+    - _ScaleMax: 0.68
+    - _ScaleMin: 1.5
+    - _Tiling: 12.29
+    m_Colors:
+    - _MainColor: {r: 0.68182623, g: 0.8846768, b: 0.8867924, a: 1}
+    - _SubColor: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
+  m_BuildTextureStacks: []
