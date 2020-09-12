@@ -29,42 +29,38 @@ Shader "Hidden/Custom/Glitch"
                 block.x / maxBlockNumX,
                 block.y / maxBlockNumY);
         uv_noise = frac( uv_noise + _Time );
-        // return float4(uv_noise,0,1);
-        // uv_noise += floor(_Time * float2(1234.0, 3543.0)) / float2(64,64);
-        // uv_noise += floor(_Time * float2(1234.0, 3543.0));
         // return float4(uv_noise,0,1); 
 
         //TODO: 生数値が適当かどうか調べる
         float line_thresh = pow(frac(_Time * 1236.0453), 3.0) * _LineThrethIntensity;
         float block_thresh = pow(frac(_Time * 2236.0453), 3.0) * _BlockThrethIntensity;
         float textureIntensity = 5;
-        double block_threshhold_from_texture = tex2D(_RandomNoiseTexture,uv_noise).g * textureIntensity;
-        double line_threshhold_from_texture = tex2D(_RandomNoiseTexture,double2(uv_noise.y,0.0)).g * textureIntensity;
+        float block_threshhold_from_texture = tex2D(_RandomNoiseTexture,uv_noise).g * textureIntensity;
+        float line_threshhold_from_texture = tex2D(_RandomNoiseTexture,double2(uv_noise.y,0.0)).g * textureIntensity;
 
         // return block_threshhold_from_texture;
-        // return step(line_threshhold_from_texture,_FloatGeneralValue0);
+        // return line_threshhold_from_texture;
 
         float2 uv_r,uv_g,uv_b;
         uv_r = uv_g = uv_b = uv;
 
         int enableLineGlitch =
             step(line_threshhold_from_texture,line_thresh)
-         || step(block_threshhold_from_texture,block_thresh)
-        ;
+         || step(block_threshhold_from_texture,block_thresh);
         //return enableLineGlitch;
         if(enableLineGlitch)
         {
             float2 distortion_power = (frac(uv_noise) - 0.5) * 0.3;
             // return float4(distortion_power,0,1);
-            
+   
             uv_r += distortion_power * _LineColorShiftValueRed;
             uv_g += distortion_power * _LineColorShiftValueGreen;
             uv_b += distortion_power * _LineColorShiftValueBlue;
         }
         
-        double r = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_r).r;;
-        double g = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_g).g;
-        double b = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_b).b;
+        float r = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_r).r;;
+        float g = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_g).g;
+        float b = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,uv_b).b;
         return float4(r,g,b,1);
     }
 

@@ -39,8 +39,8 @@ public sealed class GlitchRenderer : PostProcessEffectRenderer<Glitch>
         sheet.properties.SetFloat(BlockTiling,settings.blockSize);
         sheet.properties.SetFloat(FloatGeneralValue,settings.floatGeneralValue);
         sheet.properties.SetFloat(LineColorShiftValueRed,settings.lineColorShiftValueRed);
-        sheet.properties.SetFloat(LineColorShiftValueRed,settings.lineColorShiftValueGreen);
-        sheet.properties.SetFloat(LineColorShiftValueRed,settings.lineColorShiftValueBlue);
+        sheet.properties.SetFloat(LineColorShiftValueGreen,settings.lineColorShiftValueGreen);
+        sheet.properties.SetFloat(LineColorShiftValueBlue,settings.lineColorShiftValueBlue);
         sheet.properties.SetFloat(BlockThrethIntensityNameID,settings.blockThrethIntensity);
         sheet.properties.SetFloat(LineThrethIntensityNameID,settings.lineThrethIntensity);
         context.command.BlitFullscreenTriangle(context.source,context.destination,sheet,0);

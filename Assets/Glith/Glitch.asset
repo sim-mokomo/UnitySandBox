@@ -64,8 +64,33 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   blend:
+    overrideState: 1
+    value: 1
+  randomNoiseTexture:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 92f9005c6c78b4acf9b5eb7936dffc61, type: 3}
+    defaultState: 1
+  blockSize:
+    overrideState: 1
+    value: 30
+  floatGeneralValue:
     overrideState: 0
-    value: 0.5
+    value: -1.37
+  lineColorShiftValueRed:
+    overrideState: 1
+    value: 0.1
+  lineColorShiftValueGreen:
+    overrideState: 1
+    value: 0.1
+  lineColorShiftValueBlue:
+    overrideState: 1
+    value: 0.1
+  blockThrethIntensity:
+    overrideState: 1
+    value: 1
+  lineThrethIntensity:
+    overrideState: 1
+    value: 0.6
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
