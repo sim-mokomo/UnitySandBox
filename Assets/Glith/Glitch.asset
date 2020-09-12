@@ -72,25 +72,25 @@ MonoBehaviour:
     defaultState: 1
   blockSize:
     overrideState: 1
-    value: 30
+    value: 28
   floatGeneralValue:
     overrideState: 0
     value: -1.37
   lineColorShiftValueRed:
     overrideState: 1
-    value: 0.1
+    value: 0.2
   lineColorShiftValueGreen:
     overrideState: 1
-    value: 0.1
+    value: 0.3
   lineColorShiftValueBlue:
     overrideState: 1
-    value: 0.1
+    value: 0.15
   blockThrethIntensity:
     overrideState: 1
-    value: 1
+    value: 0.4
   lineThrethIntensity:
     overrideState: 1
-    value: 0.6
+    value: 0.55
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
