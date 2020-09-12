@@ -55,7 +55,7 @@ Shader "Hidden/Custom/Glitch"
         if(enableLineGlitch)
         {
             float2 distortion_power = (frac(uv_noise) - 0.5) * 0.3;
-            return float4(distortion_power,0,1);
+            // return float4(distortion_power,0,1);
             
             uv_r += distortion_power * _LineColorShiftValueRed;
             uv_g += distortion_power * _LineColorShiftValueGreen;
