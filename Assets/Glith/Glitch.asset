@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6091868312587657778
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae591a16036084339acdb8edf209dd20, type: 3}
+  m_Name: GrayScale
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  blend:
+    overrideState: 1
+    value: 1
+--- !u!114 &-4154057315859105407
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11597a7096c1944ec94d473b7155910f, type: 3}
+  m_Name: ColorPalette
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  color1:
+    overrideState: 0
+    value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  color2:
+    overrideState: 0
+    value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  color3:
+    overrideState: 0
+    value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  color4:
+    overrideState: 0
+    value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+--- !u!114 &-1833992918748394778
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7fc61df7a50d4b95ab9dfb06ecd09fb, type: 3}
+  m_Name: Glitch
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  blend:
+    overrideState: 1
+    value: 1
+  randomNoiseTexture:
+    overrideState: 1
+    value: {fileID: 2800000, guid: 92f9005c6c78b4acf9b5eb7936dffc61, type: 3}
+    defaultState: 1
+  blockSize:
+    overrideState: 1
+    value: 30
+  floatGeneralValue:
+    overrideState: 0
+    value: -1.37
+  lineColorShiftValueRed:
+    overrideState: 1
+    value: 0.1
+  lineColorShiftValueGreen:
+    overrideState: 1
+    value: 0.1
+  lineColorShiftValueBlue:
+    overrideState: 1
+    value: 0.1
+  blockThrethIntensity:
+    overrideState: 1
+    value: 1
+  lineThrethIntensity:
+    overrideState: 1
+    value: 0.6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
+  m_Name: Glitch
+  m_EditorClassIdentifier: 
+  settings:
+  - {fileID: -1833992918748394778}
